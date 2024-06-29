@@ -1,17 +1,13 @@
-name: Run Tests 🧪
+name: Test 🧪
 on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-        matrix:
-            node-version: [20.x]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        name: Using Node.js ${{ matrix.node-version }}
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '20.x'
           cache: 'npm'
       - run: npm install
       - name: Run Unit Tests
