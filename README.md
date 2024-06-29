@@ -4,9 +4,11 @@
 
 <p align="center">A lightweight local HTTPS proxy library for Nest framework apps (Express or Fastify) 🔀</p>
 <p align="center">
+  <a href="https://github.com/rbonestell/nest-local-https-proxy/actions/workflows/build.yml?query=branch%3Amain" target="_blank"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/rbonestell/nest-local-https-proxy/build.yml?logo=typescript&logoColor=white"></a>
   <a href="https://github.com/rbonestell/nest-local-https-proxy/actions/workflows/test.yml?query=branch%3Amain" target="_blank"><img alt="Test Results" src="https://img.shields.io/github/actions/workflow/status/rbonestell/nest-local-https-proxy/test.yml?branch=main&logo=jest&logoColor=white&label=tests"></a>
   <a href="https://app.codecov.io/gh/rbonestell/nest-local-https-proxy/tree/main/lib" target="_blank"><img alt="Test Coverage" src="https://img.shields.io/codecov/c/github/rbonestell/nest-local-https-proxy?logo=codecov&logoColor=white"></a>
-  <a href="https://github.com/rbonestell/nest-local-https-proxy/blob/main/LICENSE" target="_blank"><img alt="Package License" src="https://img.shields.io/npm/l/@nestjs/core.svg" /></a>
+  <a href="https://github.com/rbonestell/nest-local-https-proxy/blob/main/LICENSE" target="_blank"><img alt="GitHub License" src="https://img.shields.io/github/license/rbonestell/nest-local-https-proxy?color=71C347">
+</a>
   <!-- <a href="https://www.npmjs.com/nest-local-https-proxy" target="_blank"><img src="https://img.shields.io/npm/v/nest-local-https-proxy.svg" alt="NPM Version" /></a> -->
 </p>
 
