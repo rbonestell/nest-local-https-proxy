@@ -1,0 +1,37 @@
+{
+  "name": "nest-local-https-proxy",
+  "version": "1.0.0",
+  "description": "A simple library to add HTTPS support to your HTTP NestJS application for local develoment, debugging, and testing.",
+  "main": "dist/lib/local-https-proxy.js",
+  "types": "dist/lib/local-https-proxy.d.ts",
+  "scripts": {
+    "build": "rimraf -rf dist && tsc --removeComments && tsc --declaration --emitDeclarationOnly",
+    "test": "jest --config=jest.config.js --detectOpenHandles --runInBand --forceExit",
+    "test:cov": "jest --config=jest.config.js --detectOpenHandles --runInBand --coverage --forceExit"
+  },
+  "files": ["dist/lib"],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Bobby Bonestell <rbonestell@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.2.2",
+    "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-fastify": "^10.0.0"
+  },
+  "devDependencies": {
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-fastify": "^10.0.0",
+    "@nestjs/testing": "^10.0.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.9",
+    "jest": "^29.7.0",
+    "rimraf": "^5.0.7",
+    "ts-jest": "^29.1.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
+  }
+}
