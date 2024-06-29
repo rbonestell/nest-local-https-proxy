@@ -2,14 +2,13 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-
-  <p align="center">A lightweight local HTTPS proxy library for Nest framework apps (Express or Fastify) 🔀</p>
-    <!-- <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-</p> -->
+<p align="center">A lightweight local HTTPS proxy library for Nest framework apps (Express or Fastify) 🔀</p>
+<p align="center">
+  <a href="https://github.com/rbonestell/nest-local-https-proxy/actions/workflows/test.yml?query=branch%3Amain" target="_blank"><img alt="Test Results" src="https://img.shields.io/github/actions/workflow/status/rbonestell/nest-local-https-proxy/test.yml?branch=main&logo=jest&logoColor=white&label=tests"></a>
+  <a href="https://app.codecov.io/gh/rbonestell/nest-local-https-proxy/tree/main/lib" target="_blank"><img alt="Test Coverage" src="https://img.shields.io/codecov/c/github/rbonestell/nest-local-https-proxy?logo=codecov&logoColor=white"></a>
+  <a href="https://github.com/rbonestell/nest-local-https-proxy/blob/main/LICENSE" target="_blank"><img alt="Package License" src="https://img.shields.io/npm/l/@nestjs/core.svg" /></a>
+  <!-- <a href="https://www.npmjs.com/nest-local-https-proxy" target="_blank"><img src="https://img.shields.io/npm/v/nest-local-https-proxy.svg" alt="NPM Version" /></a> -->
+</p>
 
 ## Description
 
