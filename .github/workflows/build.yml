@@ -11,7 +11,7 @@ on:
       - 'package.json'
       - 'tsconfig.json'
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
