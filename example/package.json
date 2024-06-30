@@ -2,7 +2,7 @@
   "name": "example",
   "version": "0.0.1",
   "private": true,
-  "main": "./dist/example/main.js",
+  "main": "dist/example/main.js",
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
@@ -22,6 +22,7 @@
     "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "nest-local-https-proxy": "^1.0.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
   },

@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { LocalHttpsProxy } from '../../lib/src/local-https-proxy';
+import { LocalHttpsProxy } from 'nest-local-https-proxy';
 import { INestApplication } from '@nestjs/common';
 import { SecureContextOptions } from 'tls';
 
@@ -8,8 +8,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 function startLocalSslProxy(app: INestApplication, port: number) {
-  const certPath = path.join(__dirname, '..', '..', '..', 'certificate', 'cert.pem');
-  const keyPath = path.join(__dirname, '..', '..', '..', 'certificate', 'key.pem');
+  const certPath = path.join(__dirname, '..', 'certificate', 'cert.pem');
+  const keyPath = path.join(__dirname, '..', 'certificate', 'key.pem');
   let httpsOptions: SecureContextOptions;
   // Confirm local certificate files exist
   if (fs.existsSync(certPath) && fs.existsSync(keyPath)) {
