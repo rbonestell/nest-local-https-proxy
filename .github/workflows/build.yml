@@ -1,5 +1,15 @@
 name: Build 🏗️
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - 'lib/src/**'
+      - 'package.json'
+      - 'tsconfig.json'
+  pull_request:
+    paths:
+      - 'lib/src/**'
+      - 'package.json'
+      - 'tsconfig.json'
 jobs:
   test:
     runs-on: ubuntu-latest

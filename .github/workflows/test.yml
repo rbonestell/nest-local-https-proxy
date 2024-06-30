@@ -1,5 +1,17 @@
 name: Test 🧪
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - 'lib/**'
+      - 'package.json'
+      - 'tsconfig.json'
+      - 'jest.config.js'
+  pull_request:
+    paths:
+      - 'lib/**'
+      - 'package.json'
+      - 'tsconfig.json'
+      - 'jest.config.js'
 jobs:
   test:
     runs-on: ubuntu-latest
