@@ -135,10 +135,7 @@ describe('LocalHttpsProxy for Unknown HTTP Adapter', () => {
     mockNestApp.getHttpAdapter = jest.fn().mockReturnValue(mockHttpsAdapter);
   });
 
-  it('should throw an error event when unable to derive Nest app HTTP request listener', () => {
-    // Because error is emitted from constructor, we cannot subscribe to the 'error' event before it is emitted.
-    // Therefore, we have to catch the error and check the message.
-    // See: https://nodejs.org/api/events.html#eventtarget-error-handling
+  it('should throw an error event when unable to derive Nest app HTTP request listener in constructor', () => {
     let caughtError = undefined;
     try {
       const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions);
