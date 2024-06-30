@@ -1,5 +1,14 @@
 name: Test 🧪
-on: [push, pull_request]
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    paths:
+      - 'lib/src/**'
+      - '.github/**'
+      - 'package.json'
+      - 'tsconfig.json'
+      - 'jest.config.js'
 jobs:
   test:
     runs-on: ubuntu-latest
