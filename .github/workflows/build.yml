@@ -9,6 +9,6 @@ jobs:
         with:
           node-version: '20.x'
       - name: Install Dependencies
-        run: npm ci --omit=dev
+        run: npm ci
       - name: Build
         run: npm run build
