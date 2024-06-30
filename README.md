@@ -4,6 +4,7 @@
 
 <p align="center">A lightweight local HTTPS proxy library for Nest framework apps (Express or Fastify) 🔀</p>
 <p align="center">
+  <a href="https://www.npmjs.com/package/nest-local-https-proxy" target="_blank"><img alt="NPM Version" src="https://img.shields.io/npm/v/nest-local-https-proxy?logo=npm&logoColor=white"></a>
   <a href="https://github.com/rbonestell/nest-local-https-proxy/actions/workflows/build.yml?query=branch%3Amain" target="_blank"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/rbonestell/nest-local-https-proxy/build.yml?logo=typescript&logoColor=white"></a>
   <a href="https://github.com/rbonestell/nest-local-https-proxy/actions/workflows/test.yml?query=branch%3Amain" target="_blank"><img alt="Test Results" src="https://img.shields.io/github/actions/workflow/status/rbonestell/nest-local-https-proxy/test.yml?branch=main&logo=jest&logoColor=white&label=tests"></a>
   <a href="https://app.codecov.io/gh/rbonestell/nest-local-https-proxy/tree/main/lib" target="_blank"><img alt="Test Coverage" src="https://img.shields.io/codecov/c/github/rbonestell/nest-local-https-proxy?logo=codecov&logoColor=white"></a>
@@ -33,7 +34,7 @@ See the following gist for info on creating self-signed SSL certificate PEM file
 ## Installation
 
 ```bash
-$ npm install nest-local-https-proxy
+$ npm i nest-local-https-proxy
 ```
 
 ## Implementation
