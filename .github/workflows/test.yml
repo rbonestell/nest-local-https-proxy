@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - 'lib/src/**'
-      - '.github/test.yml'
+      - '.github/workflows/test.yml'
       - 'package.json'
       - 'tsconfig.json'
       - 'jest.config.js'
