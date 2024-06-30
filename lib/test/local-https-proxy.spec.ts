@@ -125,7 +125,9 @@ describe.each([
 
 // Negative tests for unknown HTTP adapter
 describe('LocalHttpsProxy for Unknown HTTP Adapter', () => {
-  let mockHttpsAdapter = {} as any;
+  let mockHttpsAdapter = {
+    getInstance: jest.fn().mockReturnValue(undefined)
+  } as any;
 
   beforeEach(() => {
     // Reset mocks
@@ -134,14 +136,16 @@ describe('LocalHttpsProxy for Unknown HTTP Adapter', () => {
   });
 
   it('should throw an error event when unable to derive Nest app HTTP request listener', () => {
-    mockNestApp.getHttpAdapter = jest.fn().mockReturnValue({});
     // Because error is emitted from constructor, we cannot subscribe to the 'error' event before it is emitted.
     // Therefore, we have to catch the error and check the message.
     // See: https://nodejs.org/api/events.html#eventtarget-error-handling
+    let caughtError = undefined;
     try {
       const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions);
     } catch (error) {
+      caughtError = error;
       expect(error.message).toBe('Failed to derive HTTP server requestListener from Nest application');
     }
+    expect(caughtError !== undefined).toBe(true);
   });
 });

@@ -17,9 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@nestjs/common": "^10.0.0",
-    "@nestjs/config": "^3.2.2",
-    "@nestjs/platform-express": "^10.0.0",
-    "@nestjs/platform-fastify": "^10.0.0"
+    "@nestjs/config": "^3.2.2"
   },
   "devDependencies": {
     "@nestjs/core": "^10.0.0",

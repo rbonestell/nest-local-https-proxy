@@ -3,8 +3,6 @@ import { EventEmitter } from 'events';
 import { AddressInfo } from 'net';
 import { SecureContextOptions } from 'tls';
 import { INestApplication } from '@nestjs/common';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import { FastifyAdapter } from '@nestjs/platform-fastify';
 
 /**
  * **⚠ DISCLAIMER: For local development use only! ⚠**
@@ -82,14 +80,10 @@ export class LocalHttpsProxy extends EventEmitter implements LocalHttpsProxy {
 	 */
 	private getNestAppRequestListener(nestApp: INestApplication) {
 		const adapter = nestApp.getHttpAdapter();
-		switch (adapter?.constructor) {
-			case FastifyAdapter:
-				return adapter?.getInstance()?.routing;
-			case ExpressAdapter:
-				return adapter?.getInstance();
-			default:
-				throw new Error('Failed to derive HTTP server requestListener from Nest application');
-		}
+		const listener = adapter?.getInstance()?.routing ?? adapter?.getInstance();
+		if (!listener)
+			throw new Error('Failed to derive HTTP server requestListener from Nest application');
+		return listener;
 	}
 
 	private onError(error: Error) {
