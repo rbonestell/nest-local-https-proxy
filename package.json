@@ -2,6 +2,7 @@
   "name": "nest-local-https-proxy",
   "version": "1.0.0",
   "description": "A simple library to add HTTPS support to your HTTP NestJS application for local develoment, debugging, and testing.",
+  "private": false,
   "main": "dist/lib/local-https-proxy.js",
   "types": "dist/lib/local-https-proxy.d.ts",
   "scripts": {
