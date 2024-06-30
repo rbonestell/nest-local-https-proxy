@@ -3,12 +3,14 @@ on:
   push:
     paths:
       - 'lib/**'
+      - './github/**'
       - 'package.json'
       - 'tsconfig.json'
       - 'jest.config.js'
   pull_request:
     paths:
       - 'lib/**'
+      - './github/**'
       - 'package.json'
       - 'tsconfig.json'
       - 'jest.config.js'
