@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - 'lib/src/**'
-      - './github/**'
+      - '.github/**'
       - 'package.json'
       - 'tsconfig.json'
       - 'jest.config.js'
