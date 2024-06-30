@@ -1,4 +1,6 @@
 name: Publish 🚀
+permissions:
+  id-token: write
 on:
   release:
     types: [published]
