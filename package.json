@@ -23,15 +23,15 @@
     "self-signed"
   ],
   "private": false,
-  "main": "dist/lib/local-https-proxy.js",
-  "types": "dist/lib/local-https-proxy.d.ts",
+  "main": "dist/local-https-proxy.js",
+  "types": "dist/local-https-proxy.d.ts",
   "scripts": {
     "build": "rimraf -rf dist && tsc --removeComments && tsc --declaration --emitDeclarationOnly",
     "test": "jest --config=jest.config.js --detectOpenHandles --runInBand --forceExit",
     "test:cov": "jest --config=jest.config.js --detectOpenHandles --runInBand --coverage --forceExit"
   },
   "files": [
-    "dist/lib"
+    "dist"
   ],
   "engines": {
     "node": ">=18.0.0"
