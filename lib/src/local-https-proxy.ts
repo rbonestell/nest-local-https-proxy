@@ -35,7 +35,6 @@ export class LocalHttpsProxy extends EventEmitter implements LocalHttpsProxy {
 	/**
 	 * Start LocalHttpsProxy instance.
 	 * @param listeningPort Optional: Port on which to listen for HTTPS connections, if not provided then an open port will be automatically assigned.
-	 * @param targetPort HTTPS proxy target port (port on which NestJS service is listening)
 	 * @example <caption>Start a local HTTPS proxy listening on `0.0.0.0:43000`, proxying requests to your Nest app's HTTP server:</caption>
 	 * const localHttpsProxy = new LocalHttpsProxy(app, httpsOptions); 
 	 * localHttpsProxy.start(43000);
@@ -60,6 +59,7 @@ export class LocalHttpsProxy extends EventEmitter implements LocalHttpsProxy {
 	/**
 	 * Initialize private encapsulated instance of `https.Server`.
 	 * @param httpsOptions Options used during `https.Server` initialization.
+	 * @param nestApp NestJS application instance.
 	 * @returns New {@link https.Server} instance configured using {@link httpsOptions}.
 	 */
 	private initHttpsServer(httpsOptions: SecureContextOptions, nestApp: INestApplication): https.Server {
@@ -110,7 +110,7 @@ export declare interface LocalHttpsProxy {
 	/**
 	 * Emitted when the encapsulated {@link https.Server} successfully binds to a port and begins listening for connections.
 	 */
-	on(event: 'listening', /** @param port help */ listener: (port: string) => void): this;
+	on(event: 'listening', listener: (port: number) => void): this;
 
 	/**
 	 * Emitted for any error condition which occurs within the LocalHttpsProxy instance.
