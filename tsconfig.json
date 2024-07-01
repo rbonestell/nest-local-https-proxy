@@ -8,7 +8,6 @@
         "allowSyntheticDefaultImports": true,
         "target": "ES2021",
         "sourceMap": true,
-        "baseUrl": "src",
         "incremental": false,
         "skipLibCheck": true,
         "strictNullChecks": false,
@@ -16,7 +15,7 @@
         "strictBindCallApply": false,
         "forceConsistentCasingInFileNames": false,
         "noFallthroughCasesInSwitch": false,
-        "outDir": "dist/lib"
+        "outDir": "dist"
     },
     "exclude": [
         "node_modules",
