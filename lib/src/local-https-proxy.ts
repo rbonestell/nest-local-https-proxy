@@ -20,16 +20,26 @@ export class LocalHttpsProxy extends EventEmitter implements LocalHttpsProxy {
 	/**
 	 * @param nestApp NestJS application instance.
 	 * @param httpsOptions Accepts {@link https.createServer}(`options`: {@link SecureContextOptions}) parameter from `node:https`. Object _must_ include `cert` and `key` properties.
-	 * @throws When initialization of https.Server fails.
+	 * @param errorCallback Optional: Callback function called when any error condition occurs within the LocalHttpsProxy instance.
+	 * @param listeningCallback Optional: Callback function called when the encapsulated {@link https.Server} successfully binds to a port and begins listening for connections.
+	 * @throws When initialization of {@link https.Server} fails.
 	 */
 	constructor(
 		nestApp: INestApplication,
 		httpsOptions: SecureContextOptions,
+		errorCallback?: (error: Error) => void,
+		listeningCallback?: (port: number) => void
 	) {
 		super();
 		if (!httpsOptions || !httpsOptions.cert || !httpsOptions.key)
 			throw new Error('Invalid httpsOptions provided');
 		this.httpsProxyServer = this.initHttpsServer(httpsOptions, nestApp);
+
+		// Subscribe to events if callback functions provided
+		if (errorCallback && errorCallback instanceof Function)
+			this.on('error', errorCallback);
+		if (listeningCallback && listeningCallback instanceof Function)
+			this.on('listening', listeningCallback);
 	}
 
 	/**

@@ -90,6 +90,16 @@ describe.each([
     expect(listeningSpy).toHaveBeenCalledWith(mockHttpsServerPort);
   });
 
+  it('should call listeningCallback function when the HTTPS server starts', () => {
+    const listeningCallback = jest.fn();
+    const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions, jest.fn(), (port) => { listeningCallback(port); });
+    
+    proxy.start(mockHttpsServerPort);
+    mockHttpsServer.emit('listening');
+
+    expect(listeningCallback).toHaveBeenCalledWith(mockHttpsServerPort);
+  });
+
   it('should emit an error event when the server encounters an error', () => {
     const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions);
     const errorSpy = jest.fn();
@@ -99,6 +109,16 @@ describe.each([
     mockHttpsServer.emit('error', testError);
 
     expect(errorSpy).toHaveBeenCalledWith(testError);
+  });
+
+  it('should call errorCallback function when the server encounters an error', () => {
+    const errorCallback = jest.fn();
+    const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions, (error) => { errorCallback(error); }, jest.fn());
+    
+    const expectedError = new Error('Test error');
+    mockHttpsServer.emit('error', expectedError);
+
+    expect(errorCallback).toHaveBeenCalledWith(expectedError);
   });
 
   it('should emit an error event when start() is called and server is already listening', () => {
@@ -111,6 +131,17 @@ describe.each([
 
     const expectedError = new Error(`Unable to start ${LocalHttpsProxy.name} on port ${mockHttpsServerPort} because it is already listening on port ${mockHttpsServerPort}`);
     expect(errorSpy).toHaveBeenCalledWith(expectedError);
+  });
+
+  it('should call errorCallback function when when start() is called and server is already listening', () => {
+    const errorCallback = jest.fn();
+    const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions, (error) => { errorCallback(error); }, jest.fn());
+    
+    proxy.start(mockHttpsServerPort);
+    proxy.start(mockHttpsServerPort);
+
+    const expectedError = new Error(`Unable to start ${LocalHttpsProxy.name} on port ${mockHttpsServerPort} because it is already listening on port ${mockHttpsServerPort}`);
+    expect(errorCallback).toHaveBeenCalledWith(expectedError);
   });
 
   it('should close all connections when close is called', () => {
