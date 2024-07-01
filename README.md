@@ -56,24 +56,32 @@ $ npm i nest-local-https-proxy
     }
     ```
 
-1. Instatiate the `LocalHttpsProxy` class.
-
-    Provide your `NestApplication` instance, and the HTTPS options object.
+1. Instatiate the `LocalHttpsProxy` class, providing your `NestApplication` instance, and the HTTPS options object.
 
     ```typescript
     const httpsDevProxy = new LocalHttpsProxy(app, httpsOptions);
     ```
 
-1. (Optional) Subscribe to events on `LocalHttpsProxy` instance.
+1. (Optional) Provide callback functions to constructor _or_ subscribe to events on `LocalHttpsProxy` instance.
 
-    ```typescript
-    httpsDevProxy.on('listening', (httpsPort) => {
-      console.log(`HTTPS listening on ${httpsPort}`);
-    });
-    httpsDevProxy.on('error', (error) => {
-      console.error(`HTTPS proxy error occurred: ${error.message}`);
-    });
-    ```
+   * Provide callback functions to constructor:
+
+      ```typescript
+      const errorCallback = (error) => { console.error(`HTTPS proxy error occurred: ${error.message}`); };
+      const listeningCallback = (httpsPort) => { console.log(`HTTPS listening on ${httpsPort}`); };
+      const httpsDevProxy = new LocalHttpsProxy(app, httpsOptions, errorCallback, listeningCallback);
+      ```
+
+   * Subscribe to events:
+
+      ```typescript
+      httpsDevProxy.on('listening', (httpsPort) => {
+        console.log(`HTTPS listening on ${httpsPort}`);
+      });
+      httpsDevProxy.on('error', (error) => {
+        console.error(`HTTPS proxy error occurred: ${error.message}`);
+      });
+      ```
 
 1. Start the proxy
 
