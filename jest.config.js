@@ -9,7 +9,6 @@ module.exports = {
       '^.+\\.ts$': 'ts-jest',
   },
   testEnvironment: 'node',
-  collectCoverage: true,
   coverageReporters: ['text', 'cobertura'],
   coverageDirectory: '../coverage',
 };
