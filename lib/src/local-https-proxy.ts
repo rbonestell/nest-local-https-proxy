@@ -25,7 +25,7 @@ export class LocalHttpsProxy extends EventEmitter implements LocalHttpsProxy {
 	 * @throws When initialization of {@link https.Server} fails.
 	 */
 	constructor(
-		nestApp: INestApplication,
+		nestApp: Pick<INestApplication, 'getHttpAdapter'>,
 		httpsOptions: SecureContextOptions,
 		errorCallback?: (error: Error) => void,
 		listeningCallback?: (port: number) => void
@@ -72,7 +72,7 @@ export class LocalHttpsProxy extends EventEmitter implements LocalHttpsProxy {
 	 * @param nestApp NestJS application instance.
 	 * @returns New {@link https.Server} instance configured using {@link httpsOptions}.
 	 */
-	private initHttpsServer(httpsOptions: SecureContextOptions, nestApp: INestApplication): https.Server {
+	private initHttpsServer(httpsOptions: SecureContextOptions, nestApp:  Pick<INestApplication, 'getHttpAdapter'>): https.Server {
 		// Observe existing HTTP server in Nest app
 		const requestListener = this.getNestAppRequestListener(nestApp);
 
@@ -88,7 +88,7 @@ export class LocalHttpsProxy extends EventEmitter implements LocalHttpsProxy {
 	 * @param nestApp NestJS application instance.
 	 * @returns requestListener from the HTTP server within Nest Application, or undefined if unavailable.
 	 */
-	private getNestAppRequestListener(nestApp: INestApplication) {
+	private getNestAppRequestListener(nestApp:  Pick<INestApplication, 'getHttpAdapter'>) {
 		const adapter = nestApp.getHttpAdapter();
 		const listener = adapter?.getInstance()?.routing ?? adapter?.getInstance();
 		if (!listener)
