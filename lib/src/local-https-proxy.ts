@@ -72,7 +72,7 @@ export class LocalHttpsProxy extends EventEmitter implements LocalHttpsProxy {
 	 * @param nestApp NestJS application instance.
 	 * @returns New {@link https.Server} instance configured using {@link httpsOptions}.
 	 */
-	private initHttpsServer(httpsOptions: SecureContextOptions, nestApp:  Pick<INestApplication, 'getHttpAdapter'>): https.Server {
+	private initHttpsServer(httpsOptions: SecureContextOptions, nestApp: INestApplication): https.Server {
 		// Observe existing HTTP server in Nest app
 		const requestListener = this.getNestAppRequestListener(nestApp);
 
@@ -88,7 +88,7 @@ export class LocalHttpsProxy extends EventEmitter implements LocalHttpsProxy {
 	 * @param nestApp NestJS application instance.
 	 * @returns requestListener from the HTTP server within Nest Application, or undefined if unavailable.
 	 */
-	private getNestAppRequestListener(nestApp:  Pick<INestApplication, 'getHttpAdapter'>) {
+	private getNestAppRequestListener(nestApp: INestApplication) {
 		const adapter = nestApp.getHttpAdapter();
 		const listener = adapter?.getInstance()?.routing ?? adapter?.getInstance();
 		if (!listener)
