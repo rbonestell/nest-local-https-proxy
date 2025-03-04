@@ -25,7 +25,7 @@ export class LocalHttpsProxy extends EventEmitter implements LocalHttpsProxy {
 	 * @throws When initialization of {@link https.Server} fails.
 	 */
 	constructor(
-		nestApp: Pick<INestApplication, 'getHttpAdapter'>,
+		nestApp: INestApplication,
 		httpsOptions: SecureContextOptions,
 		errorCallback?: (error: Error) => void,
 		listeningCallback?: (port: number) => void
