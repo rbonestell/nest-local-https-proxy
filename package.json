@@ -26,21 +26,19 @@
 	"main": "dist/local-https-proxy.js",
 	"types": "dist/local-https-proxy.d.ts",
 	"scripts": {
+		"prepare": "husky",
 		"build": "rimraf -rf dist && tsc --removeComments && tsc --declaration --emitDeclarationOnly",
 		"test": "jest --config=jest.config.js --detectOpenHandles --runInBand --forceExit",
 		"test:cov": "jest --config=jest.config.js --detectOpenHandles --runInBand --coverage --forceExit",
-		"lint": "eslint --ext .ts lib"
+		"lint": "eslint --ext .ts lib",
+		"lint:fix": "eslint --ext .ts lib --fix",
+		"lint:staged": "lint-staged"
 	},
 	"files": [
 		"dist"
 	],
 	"lint-staged": {
-		"lib/src/**/*.{ts}": "eslint --fix"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
+		"lib/**/*.ts": "eslint --fix"
 	},
 	"engines": {
 		"node": ">=18.0.0"
