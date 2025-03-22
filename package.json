@@ -35,7 +35,7 @@
 		"dist"
 	],
 	"lint-staged": {
-		"*.{ts}": "eslint --fix"
+		"lib/src/**/*.{ts}": "eslint --fix"
 	},
 	"husky": {
 		"hooks": {
