@@ -2,9 +2,6 @@
 **/dist
 **/node_modules
 
-# VSCode
-.vscode
-
 # Logs
 logs
 *.log

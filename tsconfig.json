@@ -1,28 +1,21 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "declaration": false,
-        "removeComments": false,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
-        "target": "ES2021",
-        "sourceMap": true,
-        "incremental": false,
-        "skipLibCheck": true,
-        "strictNullChecks": false,
-        "noImplicitAny": false,
-        "strictBindCallApply": false,
-        "forceConsistentCasingInFileNames": false,
-        "noFallthroughCasesInSwitch": false,
-        "outDir": "dist"
-    },
-    "exclude": [
-        "node_modules",
-        "dist",
-        "test",
-        "example",
-        "**/*spec.ts"
-    ],
-    "files": ["lib/src/local-https-proxy.ts"]
+	"compilerOptions": {
+		"module": "commonjs",
+		"declaration": false,
+		"removeComments": false,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"target": "ES2021",
+		"sourceMap": true,
+		"incremental": false,
+		"skipLibCheck": true,
+		"strictNullChecks": false,
+		"noImplicitAny": false,
+		"strictBindCallApply": false,
+		"forceConsistentCasingInFileNames": false,
+		"noFallthroughCasesInSwitch": false,
+		"outDir": "dist"
+	},
+	"exclude": ["node_modules", "dist", "test", "example"]
 }

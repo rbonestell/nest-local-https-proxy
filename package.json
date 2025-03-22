@@ -1,57 +1,75 @@
 {
-  "name": "nest-local-https-proxy",
-  "version": "1.2.0",
-  "description": "A simple library to add HTTPS support to your HTTP NestJS application for local develoment, debugging, and testing.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rbonestell/nest-local-https-proxy.git"
-  },
-  "bugs": {
-    "url": "https://github.com/rbonestell/nest-local-https-proxy/issues"
-  },
-  "keywords": [
-    "nest",
-    "nestjs",
-    "ssl",
-    "tls",
-    "https",
-    "local",
-    "express",
-    "fastify",
-    "secure",
-    "certificate",
-    "self-signed"
-  ],
-  "private": false,
-  "main": "dist/local-https-proxy.js",
-  "types": "dist/local-https-proxy.d.ts",
-  "scripts": {
-    "build": "rimraf -rf dist && tsc --removeComments && tsc --declaration --emitDeclarationOnly",
-    "test": "jest --config=jest.config.js --detectOpenHandles --runInBand --forceExit",
-    "test:cov": "jest --config=jest.config.js --detectOpenHandles --runInBand --coverage --forceExit"
-  },
-  "files": [
-    "dist"
-  ],
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "author": "Bobby Bonestell <rbonestell@gmail.com>",
-  "license": "MIT",
-  "peerDependencies": {
-    "@nestjs/common": "^9.0.0 || ^10.0.0 || ^11.0.0"
-  },
-  "devDependencies": {
-    "@nestjs/common": "^11.0.0",
-    "@nestjs/platform-express": "^11.0.0",
-    "@nestjs/platform-fastify": "^11.0.0",
-    "@nestjs/testing": "^11.0.0",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^22.13.1",
-    "jest": "^29.7.0",
-    "rimraf": "^6.0.1",
-    "ts-jest": "^29.2.5",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.7.3"
-  }
+	"name": "nest-local-https-proxy",
+	"version": "1.2.0",
+	"description": "A simple library to add HTTPS support to your HTTP NestJS application for local develoment, debugging, and testing.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rbonestell/nest-local-https-proxy.git"
+	},
+	"bugs": {
+		"url": "https://github.com/rbonestell/nest-local-https-proxy/issues"
+	},
+	"keywords": [
+		"nest",
+		"nestjs",
+		"ssl",
+		"tls",
+		"https",
+		"local",
+		"express",
+		"fastify",
+		"secure",
+		"certificate",
+		"self-signed"
+	],
+	"private": false,
+	"main": "dist/local-https-proxy.js",
+	"types": "dist/local-https-proxy.d.ts",
+	"scripts": {
+		"prepare": "husky",
+		"build": "rimraf -rf dist && tsc --removeComments && tsc --declaration --emitDeclarationOnly",
+		"test": "jest --config=jest.config.js --detectOpenHandles --runInBand --forceExit",
+		"test:cov": "jest --config=jest.config.js --detectOpenHandles --runInBand --coverage --forceExit",
+		"lint": "eslint --ext .ts lib",
+		"lint:fix": "eslint --ext .ts lib --fix",
+		"lint:staged": "lint-staged"
+	},
+	"files": [
+		"dist"
+	],
+	"lint-staged": {
+		"lib/**/*.ts": "eslint --fix"
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"author": "Bobby Bonestell <rbonestell@gmail.com>",
+	"license": "MIT",
+	"peerDependencies": {
+		"@nestjs/common": "^9.0.0 || ^10.0.0 || ^11.0.0"
+	},
+	"devDependencies": {
+		"@darraghor/eslint-plugin-nestjs-typed": "^6.4.3",
+		"@eslint/js": "^9.23.0",
+		"@nestjs/common": "^11.0.0",
+		"@nestjs/platform-express": "^11.0.0",
+		"@nestjs/platform-fastify": "^11.0.0",
+		"@nestjs/testing": "^11.0.0",
+		"@types/jest": "^29.5.14",
+		"@types/node": "^22.13.1",
+		"@typescript-eslint/eslint-plugin": "^8.27.0",
+		"@typescript-eslint/parser": "^8.27.0",
+		"eslint": "^9.23.0",
+		"eslint-plugin-prettier": "^5.2.3",
+		"husky": "^9.1.7",
+		"jest": "^29.7.0",
+		"rimraf": "^6.0.1",
+		"ts-jest": "^29.2.5",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.8.2",
+		"typescript-eslint": "^8.27.0"
+	},
+	"dependencies": {
+		"lint-staged": "^15.5.0"
+	}
 }
