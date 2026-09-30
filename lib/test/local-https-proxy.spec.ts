@@ -31,6 +31,9 @@ mockHttpsServer.listen = jest.fn().mockImplementation((port) => {
 	mockHttpsServerListeningStatus = true;
 });
 mockHttpsServer.closeAllConnections = jest.fn();
+mockHttpsServer.close = jest.fn().mockImplementation(() => {
+	mockHttpsServerListeningStatus = false;
+});
 mockHttpsServer.address = jest
 	.fn()
 	.mockReturnValue({ port: mockHttpsServerPort });
@@ -189,6 +192,22 @@ describe.each([
 		mockHttpsServerListeningStatus = true;
 		proxy.close();
 		expect(mockHttpsServer.closeAllConnections).toHaveBeenCalled();
+	});
+
+	it('should stop listening when close is called', () => {
+		const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions);
+		proxy.start(mockHttpsServerPort);
+		(mockHttpsServer.close as jest.Mock).mockClear();
+		proxy.close();
+		expect(mockHttpsServer.close).toHaveBeenCalledTimes(1);
+		expect(mockHttpsServer.listening).toBe(false);
+	});
+
+	it('should not close the server when it is not listening', () => {
+		const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions);
+		(mockHttpsServer.close as jest.Mock).mockClear();
+		proxy.close();
+		expect(mockHttpsServer.close).not.toHaveBeenCalled();
 	});
 });
 

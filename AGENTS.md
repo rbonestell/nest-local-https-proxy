@@ -4,12 +4,12 @@ This file provides guidance to AI agents when working with code in this reposito
 
 ## What this is
 
-`nest-local-https-proxy` is a small npm library that adds an HTTPS listener to an existing HTTP NestJS app (Express or Fastify) for **local development only**, using self-signed certs. Peer dependency: `@nestjs/common` 9, 10, or 11. Node >= 18.
+`nest-local-https-proxy` is a small npm library that adds an HTTPS listener to an existing HTTP NestJS app (Express or Fastify) for **local development only**, using self-signed certs. Peer dependency: `@nestjs/common` 11 or 12. Node >= 22.
 
 ## Commands
 
 ```bash
-npm run build          # rimraf dist, tsc (comments stripped), then tsc again to emit .d.ts only
+npm run build          # tsc via tsconfig.build.json (lib/src only -> dist/), then again for .d.ts only
 npm test               # jest (runInBand, detectOpenHandles, forceExit)
 npm run test:cov       # same + coverage (text + cobertura -> ./coverage)
 npm run lint           # eslint over lib/
@@ -32,7 +32,7 @@ Tests mock `https` with `jest.mock('https')` and replace the server with an `Eve
 
 ## Example app
 
-`example/` is a separate Nest app with its own `package.json`. It consumes the library via `"nest-local-https-proxy": "file:../"` and ships a sample self-signed cert. The proxy only starts when `APP_ENV=local`. Run `npm run build` at the repo root before running the example.
+`example/` is a separate Nest app with its own `package.json`. It consumes the library via `"nest-local-https-proxy": "file:../"` and ships a sample self-signed cert. The proxy only starts when `APP_ENV=local`. `example/.npmrc` sets `install-links=true`, so the library is installed as a packed copy and not a symlink. A symlink would put two `@nestjs/common` copies in play and break types. After changing the library, run `npm run build` at the root and then `npm i` in `example/` to pick up the change.
 
 ## Style
 
@@ -40,4 +40,8 @@ Prettier: tabs, single quotes, `trailingComma: es5`. The root `tsconfig.json` ha
 
 ## CI / release
 
-GitHub Actions on Node 20: `build.yml` runs `npm run build`, and `test.yml` runs `test:cov` and uploads to Codecov. `publish.yml` runs `npm publish --provenance` when a GitHub release is published.
+GitHub Actions: `build.yml` runs `npm run build` and `test.yml` runs `test:cov` on a Node 22 + 24 matrix; `test.yml` also uploads to Codecov. `publish.yml` runs `npm publish --provenance` when a GitHub release is published.
+
+## Nest 12 / ESM
+
+Nest 12 packages are ESM-only (`"type": "module"`), and jest's CJS loader can't import them. For that reason the devDeps stay on Nest 11 while the peer range allows 11 and 12. The library ships as CJS and imports `@nestjs/common` with `import type` only, so the emitted JS has no runtime dependency on Nest. Keep it that way.

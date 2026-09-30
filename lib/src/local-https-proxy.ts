@@ -2,7 +2,7 @@ import * as https from 'https';
 import { EventEmitter } from 'events';
 import { AddressInfo } from 'net';
 import { SecureContextOptions } from 'tls';
-import { INestApplication } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 
 /**
  * **⚠ DISCLAIMER: For local development use only! ⚠**
@@ -65,8 +65,10 @@ export class LocalHttpsProxy extends EventEmitter implements ILocalHttpsProxy {
 	 * Stop LocalHttpsProxy and close all open connections.
 	 */
 	public close() {
-		if (this.httpsProxyServer?.listening)
+		if (this.httpsProxyServer?.listening) {
+			this.httpsProxyServer.close();
 			this.httpsProxyServer.closeAllConnections();
+		}
 	}
 
 	/**
