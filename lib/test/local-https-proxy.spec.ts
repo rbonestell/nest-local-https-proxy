@@ -1,37 +1,41 @@
+import { afterEach, beforeEach, describe, expect, it, vi, type Mock, type Mocked } from 'vitest';
 import { INestApplication } from '@nestjs/common';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import { EventEmitter } from 'events';
 import * as https from 'https';
 import { LocalHttpsProxy } from '../src/local-https-proxy';
-jest.mock('https');
+vi.mock('https');
 
 // Mock NestJS dependencies
-const mockNestApp: jest.Mocked<INestApplication> = {
-	get: jest.fn(),
-	getHttpAdapter: jest.fn(),
+const mockNestApp: Mocked<INestApplication> = {
+	get: vi.fn(),
+	getHttpAdapter: vi.fn(),
 } as any;
 
 // Mock Express and Fastify dependencies
-const mockExpressAdapter: jest.Mocked<ExpressAdapter> =
+const mockExpressAdapter: Mocked<ExpressAdapter> =
 	new ExpressAdapter() as any;
 const mockFastifyInstance = {
-	routing: jest.fn(),
+	routing: vi.fn(),
 } as any;
-const mockFastifyAdapter: jest.Mocked<FastifyAdapter> =
+const mockFastifyAdapter: Mocked<FastifyAdapter> =
 	new FastifyAdapter() as any;
-mockFastifyAdapter.getInstance = jest.fn().mockReturnValue(mockFastifyInstance);
+mockFastifyAdapter.getInstance = vi.fn().mockReturnValue(mockFastifyInstance);
 
 // Mock NodeJS HTTPS Server
 let mockHttpsServerListeningStatus = false;
 let mockHttpsServerPort = 43000;
-const mockHttpsServer: jest.Mocked<https.Server> = new EventEmitter() as any;
-mockHttpsServer.listen = jest.fn().mockImplementation((port) => {
+const mockHttpsServer: Mocked<https.Server> = new EventEmitter() as any;
+mockHttpsServer.listen = vi.fn().mockImplementation((port) => {
 	mockHttpsServerPort = port;
 	mockHttpsServerListeningStatus = true;
 });
-mockHttpsServer.closeAllConnections = jest.fn();
-mockHttpsServer.address = jest
+mockHttpsServer.closeAllConnections = vi.fn();
+mockHttpsServer.close = vi.fn().mockImplementation(() => {
+	mockHttpsServerListeningStatus = false;
+});
+mockHttpsServer.address = vi
 	.fn()
 	.mockReturnValue({ port: mockHttpsServerPort });
 Object.defineProperty(mockHttpsServer, 'listening', {
@@ -44,7 +48,7 @@ Object.defineProperty(mockHttpsServer, 'listening', {
 });
 
 // Mock NodeJS https.createServer function to return mockHttpsServer instance
-(https.createServer as jest.Mock).mockImplementation(() => mockHttpsServer);
+(https.createServer as Mock).mockImplementation(() => mockHttpsServer);
 const httpsOptions = { cert: 'cert', key: 'key' };
 
 // Run all tests for both Express and Fastify adapters
@@ -57,13 +61,13 @@ describe.each([
 	beforeEach(() => {
 		// Reset mocks
 		mockHttpsServerListeningStatus = false;
-		mockNestApp.getHttpAdapter = jest.fn().mockReturnValue(mockHttpsAdapter);
+		mockNestApp.getHttpAdapter = vi.fn().mockReturnValue(mockHttpsAdapter);
 	});
 
 	afterEach(() => {
 		// Remove all mockHttpsServer event listeners and reset mocks
 		mockHttpsServer.removeAllListeners();
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	it('should create an instance when provided with valid HTTPS options', () => {
@@ -95,7 +99,7 @@ describe.each([
 
 	it('should emit a listening event when the HTTPS server starts', () => {
 		const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions);
-		const listeningSpy = jest.fn();
+		const listeningSpy = vi.fn();
 		proxy.on('listening', listeningSpy);
 
 		proxy.start(mockHttpsServerPort);
@@ -105,11 +109,11 @@ describe.each([
 	});
 
 	it('should call listeningCallback function when the HTTPS server starts', () => {
-		const listeningCallback = jest.fn();
+		const listeningCallback = vi.fn();
 		const proxy = new LocalHttpsProxy(
 			mockNestApp,
 			httpsOptions,
-			jest.fn(),
+			vi.fn(),
 			(port) => {
 				listeningCallback(port);
 			},
@@ -123,7 +127,7 @@ describe.each([
 
 	it('should emit an error event when the server encounters an error', () => {
 		const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions);
-		const errorSpy = jest.fn();
+		const errorSpy = vi.fn();
 		proxy.on('error', errorSpy);
 
 		const testError = new Error('Test error');
@@ -133,14 +137,14 @@ describe.each([
 	});
 
 	it('should call errorCallback function when the server encounters an error', () => {
-		const errorCallback = jest.fn();
+		const errorCallback = vi.fn();
 		const _proxy = new LocalHttpsProxy(
 			mockNestApp,
 			httpsOptions,
 			(error) => {
 				errorCallback(error);
 			},
-			jest.fn(),
+			vi.fn(),
 		);
 
 		const expectedError = new Error('Test error');
@@ -151,7 +155,7 @@ describe.each([
 
 	it('should emit an error event when start() is called and server is already listening', () => {
 		const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions);
-		const errorSpy = jest.fn();
+		const errorSpy = vi.fn();
 		proxy.on('error', errorSpy);
 
 		proxy.start(mockHttpsServerPort);
@@ -164,14 +168,14 @@ describe.each([
 	});
 
 	it('should call errorCallback function when when start() is called and server is already listening', () => {
-		const errorCallback = jest.fn();
+		const errorCallback = vi.fn();
 		const proxy = new LocalHttpsProxy(
 			mockNestApp,
 			httpsOptions,
 			(error) => {
 				errorCallback(error);
 			},
-			jest.fn(),
+			vi.fn(),
 		);
 
 		proxy.start(mockHttpsServerPort);
@@ -190,18 +194,34 @@ describe.each([
 		proxy.close();
 		expect(mockHttpsServer.closeAllConnections).toHaveBeenCalled();
 	});
+
+	it('should stop listening when close is called', () => {
+		const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions);
+		proxy.start(mockHttpsServerPort);
+		(mockHttpsServer.close as Mock).mockClear();
+		proxy.close();
+		expect(mockHttpsServer.close).toHaveBeenCalledTimes(1);
+		expect(mockHttpsServer.listening).toBe(false);
+	});
+
+	it('should not close the server when it is not listening', () => {
+		const proxy = new LocalHttpsProxy(mockNestApp, httpsOptions);
+		(mockHttpsServer.close as Mock).mockClear();
+		proxy.close();
+		expect(mockHttpsServer.close).not.toHaveBeenCalled();
+	});
 });
 
 // Negative tests for unknown HTTP adapter
 describe('LocalHttpsProxy for Unknown HTTP Adapter', () => {
 	const mockHttpsAdapter = {
-		getInstance: jest.fn().mockReturnValue(undefined),
+		getInstance: vi.fn().mockReturnValue(undefined),
 	} as any;
 
 	beforeEach(() => {
 		// Reset mocks
 		mockHttpsServerListeningStatus = false;
-		mockNestApp.getHttpAdapter = jest.fn().mockReturnValue(mockHttpsAdapter);
+		mockNestApp.getHttpAdapter = vi.fn().mockReturnValue(mockHttpsAdapter);
 	});
 
 	it('should throw an error event when unable to derive Nest app HTTP request listener in constructor', () => {

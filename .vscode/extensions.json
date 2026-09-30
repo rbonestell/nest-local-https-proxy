@@ -1,6 +1,6 @@
 {
     "recommendations": [
-        "orta.vscode-jest",
+        "vitest.explorer",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode"
     ]
