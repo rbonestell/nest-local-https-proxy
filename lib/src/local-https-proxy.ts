@@ -51,7 +51,7 @@ export class LocalHttpsProxy extends EventEmitter implements ILocalHttpsProxy {
 	public start(listeningPort?: number) {
 		if (!this.httpsProxyServer?.listening) {
 			this.httpsProxyServer.listen(listeningPort);
-		} else if (this.httpsProxyServer.listening) {
+		} else {
 			const address = this.httpsProxyServer.address() as AddressInfo;
 			this.onError(
 				new Error(

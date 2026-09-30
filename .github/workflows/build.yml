@@ -9,7 +9,9 @@ on:
       - 'lib/src/**'
       - '.github/workflows/build.yml'
       - 'package.json'
+      - 'package-lock.json'
       - 'tsconfig.json'
+      - 'tsconfig.build.json'
 jobs:
   build:
     runs-on: ubuntu-latest

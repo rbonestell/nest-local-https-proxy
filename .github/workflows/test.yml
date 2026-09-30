@@ -7,16 +7,19 @@ on:
     - main
     paths:
       - 'lib/src/**'
+      - 'lib/test/**'
       - '.github/workflows/test.yml'
       - 'package.json'
+      - 'package-lock.json'
       - 'tsconfig.json'
-      - 'jest.config.js'
+      - 'vitest.config.mjs'
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: ['22.x', '24.x']
+        nest-version: ['11', '12']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,6 +27,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm install
+      - name: Install NestJS ${{ matrix.nest-version }}
+        run: npm install --no-save @nestjs/common@^${{ matrix.nest-version }} @nestjs/platform-express@^${{ matrix.nest-version }} @nestjs/platform-fastify@^${{ matrix.nest-version }}
       - name: Run Unit Tests
         run: npm run test:cov
       - name: Upload Test Coverage to Codecov
