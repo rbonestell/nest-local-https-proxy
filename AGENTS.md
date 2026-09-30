@@ -30,10 +30,6 @@ All library code lives in one file: `lib/src/local-https-proxy.ts`. Its tests ar
 
 Tests mock `https` with `jest.mock('https')` and replace the server with an `EventEmitter`. Every case runs through `describe.each` for both Express and Fastify adapters, so a new test covers both automatically.
 
-## Example app
-
-`example/` is a separate Nest app with its own `package.json`. It consumes the library via `"nest-local-https-proxy": "file:../"` and ships a sample self-signed cert. The proxy only starts when `APP_ENV=local`. `example/.npmrc` sets `install-links=true`, so the library is installed as a packed copy and not a symlink. A symlink would put two `@nestjs/common` copies in play and break types. After changing the library, run `npm run build` at the root and then `npm i` in `example/` to pick up the change.
-
 ## Style
 
 Prettier: tabs, single quotes, `trailingComma: es5`. The root `tsconfig.json` has `strictNullChecks` and `noImplicitAny` turned off.
